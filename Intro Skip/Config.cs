@@ -9,5 +9,6 @@ namespace IntroSkip
     {
         public virtual bool AllowIntroSkip { get; set; } = true;
         public virtual bool AllowOutroSkip { get; set; } = true;
+        public virtual bool AllowBreakSkip { get; set; } = false;
     }
 }

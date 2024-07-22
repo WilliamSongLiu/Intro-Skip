@@ -24,6 +24,13 @@ namespace IntroSkip.UI
             set => _config.AllowOutroSkip = value;
         }
 
+        [UIValue("break-skip-toggle")]
+        public bool BreakSkipToggle
+        {
+            get => _config.AllowBreakSkip;
+            set => _config.AllowBreakSkip = value;
+        }
+
         public SettingsHost(Config config)
         {
             _config = config;
@@ -45,5 +52,8 @@ namespace IntroSkip.UI
 
         [UIAction("set-outro-skip-toggle")]
         protected void SetOutro(bool value) => OutroSkipToggle = value;
+
+        [UIAction("set-break-skip-toggle")]
+        protected void SetBreak(bool value) => BreakSkipToggle = value;
     }
 }

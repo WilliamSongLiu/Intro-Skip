@@ -2,5 +2,6 @@
 	<settings-container>
 		<bool-setting value="intro-skip-toggle" on-change="set-intro-skip-toggle" text="Intro Skip" />
 		<bool-setting value="outro-skip-toggle" on-change="set-outro-skip-toggle" text="Outro Skip" />
+		<bool-setting value="break-skip-toggle" on-change="set-break-skip-toggle" text="Break Skip" />
 	</settings-container>
 </bg>
