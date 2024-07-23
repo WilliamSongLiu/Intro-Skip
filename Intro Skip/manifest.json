@@ -1,19 +1,18 @@
 ﻿{
-  "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
-  "author": "Auros",
-  "description": "Allows you to skip intros and outros of songs that are longer than 5 seconds without any significant objects.",
-  "gameVersion": "1.21.0",
-  "id": "IntroSkip",
-  "name": "Intro Skip",
-  "version": "4.0.3",
-  "icon": "IntroSkip.UI.intro-skip.png",
-  "dependsOn": {
-    "BSIPA": "^4.2.1",
-    "SiraUtil": "^3.0.0",
-    "BeatSaberMarkupLanguage": "^1.1.0"
-  },
-  "links": {
-    "project-source": "https://github.com/Auros/Intro-Skip",
-    "donate": "https://ko-fi.com/kyle1413k"
-  }
+    "$schema": "https://raw.githubusercontent.com/nike4613/ModSaber-MetadataFileSchema/master/Schema.json",
+    "author": "Auros & bobthezealot",
+    "description": "Allows you to skip intros, outros, and breaks that are longer than 5 seconds without any significant objects.",
+    "gameVersion": "1.29.1",
+    "id": "IntroSkip",
+    "name": "Intro Skip",
+    "version": "5.0.0",
+    "icon": "IntroSkip.UI.intro-skip.png",
+    "dependsOn": {
+        "BSIPA": "^4.2.1",
+        "SiraUtil": "^3.0.0",
+        "BeatSaberMarkupLanguage": "^1.1.0"
+    },
+    "links": {
+        "project-source": "https://github.com/WilliamSongLiu/Intro-Skip/"
+    }
 }
