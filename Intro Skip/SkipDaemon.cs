@@ -21,6 +21,11 @@ namespace IntroSkip
 
         private List<(float start, float end)> _breakTimes = new List<(float start, float end)>();
 
+        private const float SkipMinSeconds = 5f;
+        private const float SkipUpUntilSeconds = 2f;
+        private const float OutroSkipUpUntilSeconds = 1f;
+        private const float ShowSkipAfterSeconds = 1f;
+
         public bool CanSkip => InBreakPhase;
         public bool InBreakPhase => _breakTimes.Any(b => Utilities.AudioTimeSyncSource(ref _audioTimeSyncController).time > b.start && Utilities.AudioTimeSyncSource(ref _audioTimeSyncController).time < b.end);
         public bool WantsToSkip => _audioTimeSyncController.state == AudioTimeSyncController.State.Playing && (_vrControllersInputManager.TriggerValue(XRNode.LeftHand) >= .8 || _vrControllersInputManager.TriggerValue(XRNode.RightHand) >= .8 || Input.GetKey(KeyCode.I));
@@ -64,26 +69,26 @@ namespace IntroSkip
             if (objectCount == 0)
                 return;
 
-            // Intro as a break
-            if (_config.AllowIntroSkip && firstObjectTime > 5f)
+            // Intro
+            if (_config.AllowIntroSkip && firstObjectTime > SkipMinSeconds)
             {
-                _breakTimes.Add((0, firstObjectTime - 2f));
+                _breakTimes.Add((0, firstObjectTime - SkipUpUntilSeconds));
             }
 
-            // Outro as a break
-            if (_config.AllowOutroSkip && (_initData.audioClip.length - lastObjectTime) >= 5f)
+            // Outro
+            if (_config.AllowOutroSkip && (_initData.audioClip.length - lastObjectTime) >= SkipMinSeconds)
             {
-                _breakTimes.Add((lastObjectTime + 0.5f, _initData.audioClip.length - 1.5f));
+                _breakTimes.Add((lastObjectTime + ShowSkipAfterSeconds, _initData.audioClip.length - OutroSkipUpUntilSeconds));
             }
 
-            // Breaks in the middle
+            // Breaks
             if (_config.AllowBreakSkip && objectTimes.Count > 1)
             {
                 for (int i = 0; i < objectTimes.Count - 1; i++)
                 {
-                    if (objectTimes[i + 1] - objectTimes[i] >= 5f)
+                    if (objectTimes[i + 1] - objectTimes[i] >= SkipMinSeconds)
                     {
-                        _breakTimes.Add((objectTimes[i] + 2f, objectTimes[i + 1] - 2f));
+                        _breakTimes.Add((objectTimes[i] + ShowSkipAfterSeconds, objectTimes[i + 1] - SkipUpUntilSeconds));
                     }
                 }
             }
