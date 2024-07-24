@@ -6,6 +6,9 @@
 - Skips song to 1 second before the end of the song if skipping outro
 - Can be toggled in `UserData/IntroSkip.json`, as well as on modifiers menu in mods section
 
+#### Changelog 5.0.1
+- Enabled mod in practice mode (why was it disabled anyway lol)
+
 #### Changelog 5.0.0
 - Can now skip breaks in the middle of songs as well
 
