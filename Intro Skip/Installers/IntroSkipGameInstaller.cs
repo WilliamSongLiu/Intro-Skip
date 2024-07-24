@@ -16,7 +16,7 @@ namespace IntroSkip.Installers
 
         public override void InstallBindings()
         {
-            if ((_config.AllowIntroSkip || _config.AllowOutroSkip) && _gameplayCoreSceneSetupData.practiceSettings == null)
+            if (_config.AllowIntroSkip || _config.AllowOutroSkip || _config.AllowBreakSkip)
             {
                 Container.BindInterfacesTo<SkipDaemon>().AsSingle();
             }
