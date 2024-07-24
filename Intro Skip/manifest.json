@@ -5,7 +5,7 @@
     "gameVersion": "1.29.1",
     "id": "IntroSkip",
     "name": "Intro Skip",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "icon": "IntroSkip.UI.intro-skip.png",
     "dependsOn": {
         "BSIPA": "^4.2.1",
