@@ -14,27 +14,27 @@ namespace IntroSkip
         private readonly IVRPlatformHelper _vrPlatformHelper;
         private readonly ISkipDisplayService _skipDisplayService;
         private AudioTimeSyncController _audioTimeSyncController;
+        private readonly AudioTimeSyncController.InitData _audioTimeSyncControllerInitData;
         private readonly IReadonlyBeatmapData _readonlyBeatmapData;
-        private readonly AudioTimeSyncController.InitData _initData;
         private readonly VRControllersInputManager _vrControllersInputManager;
-        private readonly Rect _headSpaceRect = new Rect(1, 1, 2, 2);
 
+        private readonly Rect _headSpaceRect = new Rect(1, 1, 2, 2);
         private List<(float start, float end)> _breakTimes = new List<(float start, float end)>();
 
         private const float SkipMinSeconds = 5f;
         private const float SkipUpUntilSeconds = 2f;
         private const float OutroSkipUpUntilSeconds = 1f;
-        private const float ShowSkipAfterSeconds = 1f;
+        private const float ShowSkipAfterSeconds = 0f;
 
         public bool CanSkip => InBreakPhase;
         public bool InBreakPhase => _breakTimes.Any(b => Utilities.AudioTimeSyncSource(ref _audioTimeSyncController).time > b.start && Utilities.AudioTimeSyncSource(ref _audioTimeSyncController).time < b.end);
         public bool WantsToSkip => _audioTimeSyncController.state == AudioTimeSyncController.State.Playing && (_vrControllersInputManager.TriggerValue(XRNode.LeftHand) >= .8 || _vrControllersInputManager.TriggerValue(XRNode.RightHand) >= .8 || Input.GetKey(KeyCode.I));
 
-        public SkipDaemon(Config config, SiraLog siraLog, IVRPlatformHelper vrPlatformHelper, ISkipDisplayService skipDisplayService, AudioTimeSyncController audioTimeSyncController, IReadonlyBeatmapData readonlyBeatmapData, VRControllersInputManager vrControllersInputManager, AudioTimeSyncController.InitData initData)
+        public SkipDaemon(Config config, SiraLog siraLog, IVRPlatformHelper vrPlatformHelper, ISkipDisplayService skipDisplayService, AudioTimeSyncController audioTimeSyncController, AudioTimeSyncController.InitData audioTimeSyncControllerInitData, IReadonlyBeatmapData readonlyBeatmapData, VRControllersInputManager vrControllersInputManager)
         {
             _config = config;
             _siraLog = siraLog;
-            _initData = initData;
+            _audioTimeSyncControllerInitData = audioTimeSyncControllerInitData;
             _vrPlatformHelper = vrPlatformHelper;
             _skipDisplayService = skipDisplayService;
             _readonlyBeatmapData = readonlyBeatmapData;
@@ -47,7 +47,7 @@ namespace IntroSkip
             _breakTimes.Clear();
 
             var beatmapDataItems = _readonlyBeatmapData.allBeatmapDataItems;
-            float firstObjectTime = _initData.audioClip.length;
+            float firstObjectTime = _audioTimeSyncControllerInitData.audioClip.length;
             float lastObjectTime = -1f;
 
             int objectCount = 0;
@@ -76,9 +76,9 @@ namespace IntroSkip
             }
 
             // Outro
-            if (_config.AllowOutroSkip && (_initData.audioClip.length - lastObjectTime) >= SkipMinSeconds)
+            if (_config.AllowOutroSkip && (_audioTimeSyncControllerInitData.audioClip.length - lastObjectTime) >= SkipMinSeconds)
             {
-                _breakTimes.Add((lastObjectTime + ShowSkipAfterSeconds, _initData.audioClip.length - OutroSkipUpUntilSeconds));
+                _breakTimes.Add((lastObjectTime + ShowSkipAfterSeconds, _audioTimeSyncControllerInitData.audioClip.length - OutroSkipUpUntilSeconds));
             }
 
             // Breaks

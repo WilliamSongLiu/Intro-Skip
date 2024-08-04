@@ -37,7 +37,7 @@ namespace IntroSkip.Displays
                 _skipPromptText.fontSize = 15f;
                 canvas.enabled = true;
 
-                _skipPromptObject.layer = 5; //UI
+                _skipPromptObject.layer = 5; // UI
             }
             _skipPromptObject!.SetActive(true);
         }
